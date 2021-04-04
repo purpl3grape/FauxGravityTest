@@ -11,16 +11,12 @@ public class FauxGravityTest : MonoBehaviour
     {
         //Gravity
         _gravityUp = (attractor.position - transform.position).normalized * (attractor.localScale.x / 4);//Some Speed Scale for larger objects
-        if (Vector3.Distance(attractor.position, transform.position) > (attractor.localScale.x/2  + transform.localScale.y))
+        if (Vector3.Distance(attractor.position, transform.position) > (attractor.localScale.x / 2 + transform.localScale.y))
             transform.position += _gravityUp * Time.deltaTime;
-
+            
         //X-Z Rotation
         Quaternion _targetRotation = Quaternion.FromToRotation(-transform.up, _gravityUp) * transform.rotation;
         transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotation, 50 * Time.deltaTime);
-
-        //(Local Y) Local Heading Rotation
-        _targetRotation = Quaternion.Euler(transform.forward) * transform.rotation;
-        transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotation, 1 * Time.deltaTime);
 
 
         //X-Z Inputs Movement
@@ -44,13 +40,12 @@ public class FauxGravityTest : MonoBehaviour
         //Local Y rotation Inputs
         if (Input.GetKey(KeyCode.Q))
         {
-            transform.localRotation = Quaternion.Euler(0, 10, 0) * transform.localRotation;
+            transform.localRotation *= Quaternion.Euler(0, 10, 0);
         }
         else if (Input.GetKey(KeyCode.E))
         {
-            transform.localRotation = Quaternion.Euler(0, -10, 0) * transform.localRotation;
+            transform.localRotation *= Quaternion.Euler(0, -10, 0);
         }
-
 
     }
 }
